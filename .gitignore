@@ -6,6 +6,6 @@
 *.bak
 .git
 *.log
-static/attach/*
-static/CACHE/*
+doorfy_server/static/attach/*
+doorfy_server/static/CACHE/*
 settings_deploy.py
