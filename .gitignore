@@ -1,0 +1,11 @@
+*.pyc
+.DS_Store
+.project
+.pydevproject
+.settings
+*.bak
+.git
+*.log
+static/attach/*
+static/CACHE/*
+settings_deploy.py
