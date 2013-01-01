@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+#login-form{width:400px;margin:0 auto;border:2px dashed #D9EEF2;background-color:#fff;padding:10px;}
+#login-form td{padding:5px;}
+#login-form .login-input{font-size:21px;width:100%;border:1px solid #eee;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;}

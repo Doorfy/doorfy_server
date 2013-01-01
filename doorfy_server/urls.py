@@ -1,4 +1,7 @@
+#coding:utf-8
 from django.conf.urls import patterns, include, url
+from doorfy_server import settings
+from doorfy_server.home.views import home, about, contact
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -14,4 +17,14 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', home),
+    url(r'^about/$', about),
+    url(r'^contact/$', contact),
+    
+    # 用户帐户
+    url(r'^account/', include('doorfy_server.account.urls')),
+    # 验证码   
+    url(r'^captcha/', include('captcha.urls')),
+    # 静态文件
+    (r'^style/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.STATIC_ROOT}),
 )

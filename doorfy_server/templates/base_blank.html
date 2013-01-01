@@ -1,0 +1,53 @@
+{% load family_tags %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="content-language" content="en" />
+        <title>{{door|getDoorTitle}}</title>
+        {% load compress %}
+		{% compress css %}
+        <link href="/style/css/1v/common/reset.css" rel="stylesheet" />
+        <link href="/style/css/bootstrap.css" rel="stylesheet">
+        <link href="/style/css/1v/common/common.css" rel="stylesheet">
+        <style type="text/css">
+	      body {
+	        padding-top: 60px;
+	        padding-bottom: 40px;
+	      }
+    	</style>
+    	{% endcompress %}
+    	
+    	{% load compress %}
+		{% compress css %}
+        {% block style %}
+        {% endblock %}
+        {% endcompress %}
+    </head>
+    <body>
+	{% include 'header.html' %}
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+
+        {% include 'footer.html' %}
+	</div>
+		{% load compress %}
+		{% compress js %}
+		<script src="/style/js/1v/lib/jquery-1.7.1.js"></script>
+        <script src="/style/js/1v/lib/sea.js"></script>
+        <script src="/style/js/bootstrap.min.js"></script>
+        <script>
+			seajs.config({
+			    base: 'http://{{SITE_DOMAIN}}/style/js/1v'
+			});
+		</script>
+		{% endcompress %}
+		
+		{% load compress %}
+		{% compress js %}
+	        {% block script %}
+	        {% endblock %}
+        {% endcompress %}
+    </body>
+</html>

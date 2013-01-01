@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+
+#register-form {width:400px;margin:0 auto;border:2px dashed #D9EEF2;background-color:#fff;padding:10px;}
+#register-form td{padding:5px;}
+#register-form .register-input,#id_captcha_1{font-size:21px;width:100%;border:1px solid #eee;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;}
+#id_captcha_1{width:132px;float:left;margin-right:10px;}

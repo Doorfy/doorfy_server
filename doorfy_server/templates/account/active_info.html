@@ -1,0 +1,28 @@
+{% extends "base_blank.html" %}
+
+{% block style %}
+<style>
+.captcha{position:relative;top:-5px;}
+</style>
+{% endblock %}
+
+
+{% block content %}
+	{% if infoMessage %} 
+	<div class="alert alert-success">
+		{{ infoMessage }}
+	</div>
+	{% else %}
+	<div class="alert alert-error">
+		{{ errorMessage }}
+	</div>
+	{% endif %}
+
+{% endblock %}
+
+
+{% block script %}
+<script src="/style/js/1v/lib/underscore-min.js"></script>
+<script src="/style/js/1v/lib/backbone-min.js"></script>
+<script src="/style/js/1v/account/home.js"></script>
+{% endblock %}

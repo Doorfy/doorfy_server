@@ -1,0 +1,26 @@
+/**
+ * 首页样式,等到其他页面视觉稿出来以后统一
+ */
+ 
+ /*
+ .page{height:100%;background-repeat:no-repeat;background-color:#f5f5f5;position:relative;
+background-image: -moz-radial-gradient(50% 50%, ellipse farthest-corner, #f5f5f5, rgba(41, 41, 41, 0.9) 100%,#c5c5c5 1%);
+background-image: -webkit-radial-gradient(50% 50%, ellipse farthest-corner, #f5f5f5, rgba(41, 41, 41, 0.9) 100%,#c5c5c5 1%);
+background-image: -o-radial-gradient(50% 50%, ellipse farthest-corner, #f5f5f5, rgba(41, 41, 41, 0.9) 100%,#c5c5c5 1%);
+background-image: -ms-radial-gradient(50% 50%, ellipse farthest-corner, #f5f5f5, rgba(41, 41, 41, 0.9) 100%,#c5c5c5 1%);
+background-image: radial-gradient(50% 50%, ellipse farthest-corner, #f5f5f5, rgba(41, 41, 41, 0.9) 100%,#c5c5c5 1%)
+}
+*/
+.page{height:100%;}
+body{position:relative;background:url(/style/img/bg/bg.png) repeat;}
+.footer{position:absolute;}
+.home{clear:both;position:relative;top:15%;width:100%;z-index:10}
+.home .intro{font-size:30px;font-weight:normal;color:#efefef;text-align:center;width:100%;display:inline-block;}
+.home .door{margin:-20px auto;text-indent:-99999px;overflow:hidden;display:block;width:356px;height:421px;background:url(../../img/logo/door.png) no-repeat 50% 50%;}
+.home .door:hover{background:url(../../img/logo/door-hover.png) no-repeat 50% 50%;}
+.door-light{position:absolute;height:100%;top:0;z-index:1;}
+.door-light:after{content:"";display:block;width:342px;height:605px;margin:0 auto;background:url(../../img/bg/door-light.png) no-repeat;}
+
+
+
+

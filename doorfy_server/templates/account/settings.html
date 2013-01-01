@@ -1,0 +1,60 @@
+{% extends "base_sidebar.html" %}
+
+{% block style %}
+<style>
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div>
+	<ul class="nav nav-tabs" id="myTab">
+		<li class="active"><a href="#home">修改昵称</a></li>
+		<li><a href="#reset-password">修改密码</a></li>
+	</ul>
+ 
+	<div class="tab-content">
+		<div class="tab-pane active" id="home">
+			<form id="add-door-form" class="form-horizontal" method="post" action="/account/update_nickname/">
+				{% csrf_token %}
+				{% if errorMessage %}
+		        <div class="alert alert-error">
+		              <button data-dismiss="alert" class="close" type="button">×</button>
+		              {{ errorMessage }}
+		        </div>
+		        {% endif %}
+		        {% if successMessage %}
+		        <div class="alert alert-success">
+		              <button data-dismiss="alert" class="close" type="button">×</button>
+		              {{ successMessage }}
+		        </div>
+		        {% endif %}
+		        <div class="control-group {% if updateNicknameForm.nickname.errors %} error {% endif %}">
+		        	<label class="control-label" for="nickname">昵称</label>
+				  	<div class="controls">
+				    	{{ updateNicknameForm.nickname }}
+				    	{% if updateNicknameForm.nickname.errors %}
+				    	<span class="help-inline">{{ updateNicknameForm.nickname.errors.0|escape }}</span>
+				    	{% endif %}
+				  	</div>
+				</div>
+				<div class="control-group">
+				    <div class="controls">
+				      <button type="submit" class="btn" id="login-submit">更新</button>
+				    </div>
+				</div>	
+			</form>
+		
+		</div>
+		<div class="tab-pane" id="reset-password">
+			<button id="reset-password-button" href="javascript:void(0);" autocomplete="off" class="btn" data-loading-text="发送中...">发送修改密码链接</button>	
+			<div id="reset-password-result"></div>		
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="/style/js/1v/door/settings.js"></script>
+{% endblock %}

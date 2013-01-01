@@ -1,0 +1,28 @@
+{% extends "base_blank.html" %}
+
+{% block style %}
+<style>
+.captcha{position:relative;top:-5px;}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div>
+	<ul class="nav nav-tabs">
+	  <li id="login-button">
+	    <a href="#!/login">登陆</a>
+	  </li>
+	  <li id="register-button"><a href="#!/register">注册</a></li>
+	</ul>
+	<div id="account-form"></div>
+</div>	
+
+{% endblock %}
+
+
+{% block script %}
+<script src="/style/js/1v/lib/underscore-min.js"></script>
+<script src="/style/js/1v/lib/backbone-min.js"></script>
+<script src="/style/js/1v/account/home.js"></script>
+{% endblock %}

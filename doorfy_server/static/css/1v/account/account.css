@@ -1,0 +1,10 @@
+.account{border:1px solid #bdbdbd;padding:10px;margin:10px 0;}
+.account input[type="text"],.account input[type="password"],.account input[type="email"]{font-size:15px;border:1px solid #cacaca;height:36px;font-sieze:18px;padding:1px 2px 1px 8px;width:100%;-moz-border-radius: 10px;-webkit-border-radius: 10px;border-radius: 10px;}
+.account table{width:415px;margin:0 auto;}
+.account th{color:#747474;font-size:18px;font-weight:normal;}
+.account td{padding:5px;}
+.account .action-wrapper{text-align:left;}
+.captcha{position:relative;top:8px;}
+
+.register input[type="text"]:nth-child(2){width:60px;size:4;}
+
