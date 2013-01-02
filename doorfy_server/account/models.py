@@ -12,7 +12,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     nickname = models.CharField(max_length=128)         # 用户昵称
     permission = models.SmallIntegerField(default=0)
-    active_key = models.CharField(max_length=128)       # 激活码
     password_key = models.CharField(max_length=128)     # 忘记密码验证码
     
 class Invitation(models.Model):

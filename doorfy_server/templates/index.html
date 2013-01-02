@@ -6,75 +6,13 @@
 
 {% block script %}
 <script>
-function isEmail(strEmail) {
-    if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1) {
-        return true;   
-    } else {
-        return false;  
-    }   	
-}
-
-$(function(){
-    $('#enter').bind('click', function(){
-        $('#invite-form .control-group').show();
-        $('#invite-form .help-inline').hide();
-        $('#invite-form .control-group').removeClass('error');
-        $('#invite-email').attr('disabled',false);
-        $('#invite-button').attr('disabled',false);
-        $('#invite-message').hide();
-        $('#invite-modal').modal({
-            keyboard: false
-        });
-    });
-    
-    $('#invite-email').bind('keypress', function(ev) {
-   		if(ev.charCode == 13) {
-   			$('#invite-button').click();
-   		 	ev.preventDefault();
-   		}
-    });
-    
-    $('#invite-button').bind('click',function(){
-        var inviteEmail = $('#invite-email');
-        if(inviteEmail.val().length > 0 && isEmail(inviteEmail.val())){
-            $.ajax({
-                url: "/account/invitation/",
-                data: $('#invite-form').serialize(),
-                cache: false,
-                type: 'POST',
-                success: function(serverData) {
-                    var result = $.parseJSON(serverData);
-                    if(result.code >= 0) {
-                        // 正确
-                        $('#invite-message').removeClass().addClass('alert alert-success').text('我们会尽快发送邀请链接!').show();
-                        $('#invite-button').attr('disabled','disabled').text('申请');
-                        $('#invite-form .control-group').hide();
-                    } else if(result.code == -1) {
-                        $('#invite-message').removeClass().addClass('alert alert-info').text('邮箱已经邀请过了.').show();
-                        $('#invite-form .control-group').show();
-                        $('#invite-form .help-inline').hide();
-                        $('#invite-form .control-group').removeClass('error');
-                        $('#invite-email').attr('disabled',false);
-                        $('#invite-button').attr('disabled',false).text('申请');
-                    } else if(result.code == -2){
-                        $('#invite-message').removeClass().addClass('alert alert-error').text('邮箱填写错误').show();
-                        $('#invite-email').attr('disabled',false);
-                        $('#invite-button').attr('disabled',false).text('申请');
-                    }
-                }
-            });
-            $(this).attr('disabled','disabled').text('申请中...');
-            inviteEmail.attr('disabled','disabled');
-            $('#invite-form .control-group').removeClass('error');
-            $('#invite-form .help-inline').hide();
-            $('#invite-message').hide();
-        } else {
-            $('#invite-form .control-group').addClass('error');
-            $('#invite-form .help-inline').text('邮箱格式错误').show();
-        }
-    });
-});
+var PAGE_CONFIG = {};
+{% if registerForm %}
+PAGE_CONFIG['register'] = true;
+PAGE_CONFIG['username'] = '{{ email }}';
+{% endif %}
 </script>
+<script src="/style/js/1v/home.js"></script>
 
 {% endblock %}
 
@@ -88,11 +26,11 @@ $(function(){
 		</div>
 </div>
 
-<!-- Modal -->
-<div id="invite-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Invite Modal -->
+<div id="invite-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="invite-modal-label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">获取邀请</h3>
+    <h3 id="invite-modal-label">获取邀请</h3>
   </div>
   <div class="modal-body">
   	<div id="invite-message" class="alert alert-success" style="display:none;"></div>
@@ -112,5 +50,41 @@ $(function(){
     <button class="btn btn-primary" id="invite-button">申请</button>
   </div>
 </div>
+
+{% if registerForm %}
+<!-- Register Modal -->
+<div id="register-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="register-modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="register-modal-label">注册</h3>
+  </div>
+  <div class="modal-body">
+  	<div id="register-message" class="alert alert-success" style="display:none;"></div>
+      <form id="register-form" method="post" class="form-horizontal" action="/account/register/">
+    	{% csrf_token %}
+		<div class="control-group" id="register-email-group">
+			<label class="control-label" for="register-username">电子邮箱</label>
+			<div class="controls">
+			  <input autocomplete="off" type="email" class="register-input" tabindex="1" placeholder="电子邮箱" id="register-username" size="15" disabled="disabled">
+			  <input autocomplete="off" type="hidden" name="username" value="{{ email }}" />
+			  <span class="help-inline" style="display:none;"></span>
+			</div>
+		</div>
+		
+		<div class="control-group" id="register-pwd-group">
+			<label class="control-label" for="register-password1">密码</label>
+			<div class="controls">
+			  {{ registerForm.password1 }}
+			  <span class="help-inline" style="display:none;"></span>
+			</div>
+		</div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-primary" id="register-button">新用户注册</button>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 '''
 Created on Sep 10, 2012
 
@@ -6,53 +6,53 @@ Created on Sep 10, 2012
 '''
 
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.template.context import RequestContext
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
-from doorfy_server.account.account_util import sendActiveEmail
 from doorfy_server.account.forms.register import RegisterForm
 from doorfy_server.account.models import UserProfile
 from doorfy_server.util.logger import getLogger
+import json
 import uuid
 
 
 LOG = getLogger()
-
 
 @csrf_protect
 def register(request): 
     '''
     用户注册逻辑
     '''
-    infoMessage = ''
-    errorMessage = ''
+    REGISTER_OK = 1
+    REGISTER_USER_EXIST = -1
+    REGISTER_USERNAME_ERROR = -2
+    REGISTER_PASSWORD_ERROR = -3
+    
+    result = {'infoMessage':'', 'errorMessag':'', 'code':[]}
     if request.method == 'POST':    
         registerForm = RegisterForm(request.POST)
         if registerForm.is_valid():
             username = request.POST['username']
             try:
                 User.objects.get(username=username)                      
-                infoMessage = '用户名已存在'
+                result['infoMessage'] = '用户名已存在'
+                result['code'].append(REGISTER_USER_EXIST)
             except User.DoesNotExist:
                 u = User.objects.create_user(username, username, request.POST['password1'])
-                u.is_active = False
+                u.is_active = True
                 u.save()             
                 up = UserProfile(user=u)
-                up.active_key = str(uuid.uuid4())
                 up.password_key = ''
                 up.save()
-                sendActiveEmail(u)
-                infoMessage = '已经发送激活邮件到指定邮箱，请及时激活帐号登陆系统。'
-            # TODO 注册成功以后跳转到用户门首页
-            c = {}
-            return render(request, "account/register_success.html", c, context_instance=RequestContext(request))
+                #sendActiveEmail(u)
+                result['code'].append(REGISTER_OK)
+                result['userId'] = u.id 
+            return HttpResponse(json.dumps(result))
         else:
-            c = {"registerForm":registerForm, "infoMessage":infoMessage, 'errorMessage':errorMessage}
-            return render(request, "account/register.html", c, context_instance=RequestContext(request))
+            if registerForm.errors['username']:
+                result['code'].append(REGISTER_USERNAME_ERROR)
+            if registerForm.errors['password1']:
+                result['code'].append(REGISTER_PASSWORD_ERROR)
+            return HttpResponse(json.dumps(result))
     else:
-        registerForm = RegisterForm()
-        registerErrorMessage = ''
-        registerInfoMessage = ''
-        c = {'registerForm':registerForm, "registerErrorMessage":registerErrorMessage, "registerInfoMessage":registerInfoMessage}
-        return render(request, "account/register.html", c, context_instance=RequestContext(request))
+        pass
 

@@ -10,7 +10,6 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from doorfy_server.account.forms.invite import InviteForm
 from doorfy_server.account.forms.login import LoginForm
-from doorfy_server.account.forms.register import RegisterForm
 
 @csrf_protect
 def home(request):
@@ -18,13 +17,11 @@ def home(request):
     首页view的显示
     '''
     if request.method == 'POST':    
-        registerForm = RegisterForm(request.POST)
         return HttpResponse('Hello world!')
     else:
-        registerForm = RegisterForm()
         loginForm = LoginForm() 
         inviteForm = InviteForm()  
-    c = {"registerForm":registerForm, "loginForm":loginForm, "inviteForm":inviteForm}
+    c = {"loginForm":loginForm, "inviteForm":inviteForm}
     return render(request, "index.html", c)
 
 def about(request):
