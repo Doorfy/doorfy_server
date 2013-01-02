@@ -5,16 +5,112 @@
 {% endblock %}
 
 {% block script %}
+<script>
+function isEmail(strEmail) {
+    if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1) {
+        return true;   
+    } else {
+        return false;  
+    }   	
+}
+
+$(function(){
+    $('#enter').bind('click', function(){
+        $('#invite-form .control-group').show();
+        $('#invite-form .help-inline').hide();
+        $('#invite-form .control-group').removeClass('error');
+        $('#invite-email').attr('disabled',false);
+        $('#invite-button').attr('disabled',false);
+        $('#invite-message').hide();
+        $('#invite-modal').modal({
+            keyboard: false
+        });
+    });
+    
+    $('#invite-email').bind('keypress', function(ev) {
+   		if(ev.charCode == 13) {
+   			$('#invite-button').click();
+   		 	ev.preventDefault();
+   		}
+    });
+    
+    $('#invite-button').bind('click',function(){
+        var inviteEmail = $('#invite-email');
+        if(inviteEmail.val().length > 0 && isEmail(inviteEmail.val())){
+            $.ajax({
+                url: "/account/invitation/",
+                data: $('#invite-form').serialize(),
+                cache: false,
+                type: 'POST',
+                success: function(serverData) {
+                    var result = $.parseJSON(serverData);
+                    if(result.code >= 0) {
+                        // 正确
+                        $('#invite-message').removeClass().addClass('alert alert-success').text('我们会尽快发送邀请链接!').show();
+                        $('#invite-button').attr('disabled','disabled').text('申请');
+                        $('#invite-form .control-group').hide();
+                    } else if(result.code == -1) {
+                        $('#invite-message').removeClass().addClass('alert alert-info').text('邮箱已经邀请过了.').show();
+                        $('#invite-form .control-group').show();
+                        $('#invite-form .help-inline').hide();
+                        $('#invite-form .control-group').removeClass('error');
+                        $('#invite-email').attr('disabled',false);
+                        $('#invite-button').attr('disabled',false).text('申请');
+                    } else if(result.code == -2){
+                        $('#invite-message').removeClass().addClass('alert alert-error').text('邮箱填写错误').show();
+                        $('#invite-email').attr('disabled',false);
+                        $('#invite-button').attr('disabled',false).text('申请');
+                    }
+                }
+            });
+            $(this).attr('disabled','disabled').text('申请中...');
+            inviteEmail.attr('disabled','disabled');
+            $('#invite-form .control-group').removeClass('error');
+            $('#invite-form .help-inline').hide();
+            $('#invite-message').hide();
+        } else {
+            $('#invite-form .control-group').addClass('error');
+            $('#invite-form .help-inline').text('邮箱格式错误').show();
+        }
+    });
+});
+</script>
 
 {% endblock %}
 
 {% block content %}
 <div class="hero-unit">
-        <h1>Hello DOORFY!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <!-- <h1>Hello!</h1>
+        <p>没想好啊没想好</p> -->
         <div id="home" class="home">
 			<h3 class="intro"></h3>
-			<a href="/account/" class="door">Enter Door</a>
+			<a href="#invite-modal" class="enter" title="进入" id="enter">Enter</a>
 		</div>
 </div>
+
+<!-- Modal -->
+<div id="invite-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">获取邀请</h3>
+  </div>
+  <div class="modal-body">
+  	<div id="invite-message" class="alert alert-success" style="display:none;"></div>
+    <form id="invite-form" class="form-horizontal" method="post" action="">
+		{% csrf_token %}
+		<div class="control-group">
+        	<label class="control-label" for="forgot-username">电子邮箱</label>
+		  	<div class="controls">
+			    {{inviteForm.username}}
+			    <span class="help-inline" style="display:none;"></span>
+		  	</div>
+		</div> 
+	</form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-primary" id="invite-button">申请</button>
+  </div>
+</div>
+
 {% endblock %}

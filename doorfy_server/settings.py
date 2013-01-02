@@ -246,6 +246,9 @@ CLOUD_ACCESS_ID = ""
 CLOUD_SECRET_ACCESS_KEY = ""
 CLOUD_BUCKET = ''
 
+#是否开放注册
+REGISTRATION_OPEN = False
+
 try:
     from settings_deploy import *
     pass

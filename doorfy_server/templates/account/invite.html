@@ -1,0 +1,47 @@
+{% extends "base_blank.html" %}
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+	{% if errorMessage %}
+	<div class="alert alert-error">
+    	<button data-dismiss="alert" class="close" type="button">×</button>
+             {{errorMessage}}
+    </div>
+	{% endif %}
+	
+	{% if infoMessage %}
+	<div class="alert alert-error">
+    	<button data-dismiss="alert" class="close" type="button">×</button>
+        {{infoMessage}}
+    </div>
+	{% endif %}
+	
+	{% if inviteForm.username.errors %}
+	    {% for error in inviteForm.username.errors %}
+	        <div class="alert alert-error">
+    			<button data-dismiss="alert" class="close" type="button">×</button>
+        		电子邮箱错误：{{ error|escape }}
+    		</div>
+	    {% endfor %}
+	{% endif %}
+	<form id="invite-form" class="form-horizontal" method="post" action="">
+		{% csrf_token %}
+		<div class="control-group {% if inviteForm.username.errors %} error {% endif %}">
+        	<label class="control-label" for="forgot-username">电子邮箱</label>
+		  <div class="controls">
+		    {{inviteForm.username}}
+		    {% if inviteForm.username.errors %}
+		    <span class="help-inline">{{inviteForm.username.errors.0|escape}}</span>
+		    {% endif %}
+		  </div>
+		</div>
+		<div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn" id="login-submit">申请</button>
+		    </div>
+		</div>	   
+	</form>
+{% endblock %}

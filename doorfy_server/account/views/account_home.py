@@ -12,12 +12,9 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from doorfy_server.account.forms.login import LoginForm
 from doorfy_server.account.forms.register import RegisterForm
+from doorfy_server.settings import REGISTRATION_OPEN
 from doorfy_server.util.handy import validateEmail
 from doorfy_server.util.logger import getLogger
-
-
-
-
 
 
 LOG = getLogger()
@@ -54,8 +51,11 @@ def accountHome(request):
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/door/list/') 
-        registerForm = RegisterForm()
-        loginForm = LoginForm()
-        c = {'registerForm':registerForm, 'loginForm':loginForm}
-        return render(request, "account/index.html", c, context_instance=RequestContext(request))
+        if REGISTRATION_OPEN:
+            registerForm = RegisterForm()
+            loginForm = LoginForm()
+            c = {'registerForm':registerForm, 'loginForm':loginForm}
+            return render(request, "account/index.html", c, context_instance=RequestContext(request))
+        else:
+            return HttpResponseRedirect('/account/invitation/')
     

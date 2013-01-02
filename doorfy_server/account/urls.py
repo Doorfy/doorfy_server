@@ -4,6 +4,7 @@ from doorfy_server.account.views.account_home import accountHome
 from doorfy_server.account.views.account_settings import accountSettings
 from doorfy_server.account.views.active import active
 from doorfy_server.account.views.forgot_password import forgotPassword
+from doorfy_server.account.views.invitation import invitation
 from doorfy_server.account.views.login import login
 from doorfy_server.account.views.logout import logout
 from doorfy_server.account.views.new_password import newPassword
@@ -24,6 +25,5 @@ urlpatterns = patterns('',
     url(r'^settings/$', accountSettings),
     url(r'^reset_password/$', resetPassword),
     url(r'^update_nickname/$', updateNickname),
-    
-
+    url(r'^invitation/$', invitation),
 )

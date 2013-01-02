@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
+from doorfy_server.account.forms.invite import InviteForm
 from doorfy_server.account.forms.login import LoginForm
 from doorfy_server.account.forms.register import RegisterForm
 
@@ -21,8 +22,9 @@ def home(request):
         return HttpResponse('Hello world!')
     else:
         registerForm = RegisterForm()
-        loginForm = LoginForm()   
-    c = {"registerForm":registerForm,"loginForm":loginForm}
+        loginForm = LoginForm() 
+        inviteForm = InviteForm()  
+    c = {"registerForm":registerForm, "loginForm":loginForm, "inviteForm":inviteForm}
     return render(request, "index.html", c)
 
 def about(request):
