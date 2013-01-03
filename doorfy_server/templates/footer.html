@@ -1,3 +1,47 @@
+{% if loginForm %}
+<!-- Login Modal -->
+<div id="login-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-modal-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="login-modal-label">登陆</h3>
+  </div>
+  <div class="modal-body">
+  	<form id="login-form" class="form-horizontal" method="post" action="/account/login/">
+   		{% csrf_token %}  
+        <div class="alert alert-error" id="login-message" style="display:none;">
+              <button data-dismiss="alert" class="close" type="button">×</button>
+              error
+              {{loginErrorMessage}}
+        </div>      
+        <div class="control-group" id="login-username-group">
+        	<label class="control-label" for="login-username">电子邮箱</label>
+		  <div class="controls">
+		    {{loginForm.username}}
+		    <span class="help-inline" style="display:none;">error</span>
+		  </div>
+		</div>
+		<div class="control-group" id="login-pwd-group">
+			<label class="control-label" for="login-password">密码</label>
+		  	<div class="controls">
+		    	{{loginForm.password}}
+		    	<span class="help-inline" style="display:none;">error</span>
+		  	</div>
+		</div>
+		<div class="control-group">
+		    <div class="controls">
+		      <label class="checkbox">
+		        <input type="checkbox" name="login-remember" checked="checked" id="login-remember" /> 记住我
+		        <a href="/account/forgot_password/" style="margin-left:10px;">忘记密码</a>
+		      </label>
+		    </div>
+		</div>	                        	
+   	</form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" id="login-button">登陆</button>
+  </div>
+</div>
+{% endif %}
 <footer style="margin-top:20px;">
 	Copyright &copy; 2013.All right reserved. <a href="">隐私协议</a> | <a href="">服务条款</a>
 </footer>

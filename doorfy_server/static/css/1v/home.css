@@ -16,7 +16,7 @@ body{position:relative;}
 .footer{position:absolute;}
 .home{clear:both;position:relative;top:15%;z-index:10;}
 .home .intro{font-size:30px;font-weight:normal;color:#efefef;text-align:center;width:100%;display:inline-block;}
-.home .enter{margin:-20px auto;text-indent:-99999px;overflow:hidden;display:block;width:851px;height:564px;background:url(../../img/home-main.jpg) no-repeat 50% 50%;}
-
+.home .enter{margin:0 auto;text-indent:-99999px;overflow:hidden;display:block;width:851px;height:585px;background:url(../../img/home-main.jpg) no-repeat 50% 0;}
+.hero-unit {padding:0;}
 
 

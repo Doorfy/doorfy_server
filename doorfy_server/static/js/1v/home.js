@@ -1,12 +1,11 @@
-function isEmail(strEmail) {
-    if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1) {
-        return true;   
-    } else {
-        return false;  
-    }   	
-}
-
 $(function(){
+	function isEmail(strEmail) {
+	    if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1) {
+	        return true;   
+	    } else {
+	        return false;  
+	    }   	
+	}
 	// 邀请相关
     $('#enter').bind('click', function(){
         $('#invite-form .control-group').show();
@@ -71,6 +70,7 @@ $(function(){
 });
 
 $(function(){
+	// 注册相关
 	if(PAGE_CONFIG['register']) {
 		$('#register-modal').modal({
             keyboard: false
