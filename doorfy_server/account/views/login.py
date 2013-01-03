@@ -6,11 +6,11 @@ Created on Sep 10, 2012
 '''
 
 from django.contrib import auth
-from django.shortcuts import render
-from django.template.context import RequestContext
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from doorfy_server.account.forms.login import LoginForm
 from doorfy_server.util.logger import getLogger
+import json
 
 
 LOG = getLogger()
@@ -20,9 +20,13 @@ def login(request):
     '''
     登陆逻辑
     '''
-    if request.method == 'POST':
+    LOGIN_OK = 1
+    LOGIN_PASSWORD_NO_CORRECT = -1
+    LOGIN_USERNAME_ERROR = -2
+    LOGINREGISTER_PASSWORD_ERROR = -3
+    result = {'infoMessage':'', 'errorMessag':'', 'code':[]}
+    if request.method == 'POST':  
         loginForm = LoginForm(request.POST)
-        nextURL = request.POST.get('next', None)
         if loginForm.is_valid():
             cd = loginForm.cleaned_data
             username = cd['username']
@@ -34,23 +38,16 @@ def login(request):
                 auth.login(request, user)
                 if not request.POST.get('login-remember', None):
                     request.session.set_expiry(0)
-                c = {"url":''}
-                # Redirect to a success page.            
-                if nextURL:
-                    c['url'] = nextURL
-                    return render(request, "account/login_success.html", c,context_instance=RequestContext(request))    
-                return render(request, "account/login_success.html", c,context_instance=RequestContext(request))          
+                result['code'].append(LOGIN_OK)
+                return HttpResponse(json.dumps(result))          
             else:
-                # Show an error page
-                loginErrorMessage = '密码错误请重试。'
-                c = {"loginForm":loginForm, "loginErrorMessage":loginErrorMessage, "next":nextURL}
-                return render(request, "account/login.html", c, context_instance=RequestContext(request))
+                result['code'].append(LOGIN_PASSWORD_NO_CORRECT)
+                return HttpResponse(json.dumps(result))
         else:
-            c = {"loginForm":loginForm, "next":nextURL}
-            return render(request, "account/login.html", c, context_instance=RequestContext(request))
+            if loginForm.errors['username']:
+                result['code'].append(LOGIN_USERNAME_ERROR)
+            if loginForm.errors['password']:
+                result['code'].append(LOGINREGISTER_PASSWORD_ERROR)
+            return HttpResponse(json.dumps(result))
     else:
-        loginForm = LoginForm()
-        loginErrorMessage = ''
-        loginInfoMessage = ''
-        c = {'loginForm':loginForm, "loginErrorMessage":loginErrorMessage, "loginInfoMessage":loginInfoMessage, "next":"/door/list/"}
-        return render(request, "account/login.html", c, context_instance=RequestContext(request))
+        pass
