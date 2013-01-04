@@ -109,7 +109,7 @@ $(function(){
                 	$('#register-email-group').removeClass('error');
             		$('#register-pwd-group').removeClass('error');
             		if(codeArr[i] >= 0) {
-            			window.location = '/user/' + result.userId;
+            			window.location = '/family/list/' + result.userId;
             		}
             		if(codeArr[i] == -1) {
             			$('#register-message').text('邮箱已经注册!').show();

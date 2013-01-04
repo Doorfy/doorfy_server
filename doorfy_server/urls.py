@@ -23,6 +23,10 @@ urlpatterns = patterns('',
     
     # 用户帐户
     url(r'^account/', include('doorfy_server.account.urls')),
+    
+    # Family
+    url(r'^family/', include('doorfy_server.family.urls')),
+    
     # 验证码   
     url(r'^captcha/', include('captcha.urls')),
     # 静态文件

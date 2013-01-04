@@ -7,7 +7,7 @@ $(function() {
 	    }   	
 	}
 	
-	// 登陆了相关
+	// 登陆相关
 	$('#login').bind('click', function(){
 		$('#login-modal').modal({
             keyboard: false
@@ -62,7 +62,11 @@ $(function() {
             		if(codeArr[i] >= 0) {
             			$('#login-button').text('登陆成功');
             			loginSuccess = true;
-            			window.location.reload();
+            			if(PAGE_CONFIG['page_type'] === 'home') {
+            				window.location = '/family/list/' + result.userId
+            			} else {
+            				window.location.reload();
+            			}            			
             			break;
             		}
             		if(codeArr[i] == -1) {

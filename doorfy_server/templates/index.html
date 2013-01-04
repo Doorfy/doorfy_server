@@ -7,6 +7,7 @@
 {% block script %}
 <script>
 var PAGE_CONFIG = {};
+PAGE_CONFIG['page_type'] = 'home';
 {% if registerForm %}
 PAGE_CONFIG['register'] = true;
 PAGE_CONFIG['username'] = '{{ email }}';
@@ -27,7 +28,7 @@ PAGE_CONFIG['userId'] = request.user.id;
         <p>没想好啊没想好</p> -->
         <div id="home" class="home">
 			<h3 class="intro"></h3>
-			<a href="{% if request.user.is_authenticated %}/user/{{request.user.id}}/{% else %}#invite-modal{% endif %}" class="enter" title="进入" id="enter">Enter</a>
+			<a href="{% if request.user.is_authenticated %}/family/list/{{request.user.id}}/{% else %}#invite-modal{% endif %}" class="enter" title="进入" id="enter">Enter</a>
 		</div>
 </div>
 

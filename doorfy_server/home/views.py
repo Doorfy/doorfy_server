@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 '''
 Created on 2013-1-1
 
@@ -22,7 +22,7 @@ def home(request):
         loginForm = LoginForm() 
         inviteForm = InviteForm()  
     c = {"loginForm":loginForm, "inviteForm":inviteForm}
-    return render(request, "index.html", c)
+    return render(request, "index.html", c, context_instance=RequestContext(request))
 
 def about(request):
     c = {}

@@ -39,6 +39,7 @@ def login(request):
                 if not request.POST.get('login-remember', None):
                     request.session.set_expiry(0)
                 result['code'].append(LOGIN_OK)
+                result['userId'] = user.id
                 return HttpResponse(json.dumps(result))          
             else:
                 result['code'].append(LOGIN_PASSWORD_NO_CORRECT)
