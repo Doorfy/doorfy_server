@@ -7,19 +7,21 @@ $(function(){
 	    }   	
 	}
 	// 邀请相关
-    $('#enter').bind('click', function(){
-        $('#invite-form .control-group').show();
-        $('#invite-form .help-inline').hide();
-        $('#invite-form .control-group').removeClass('error');
-        $('#invite-email').attr('disabled',false);
-        $('#invite-button').attr('disabled',false);
-        $('#invite-message').hide();
-        $('#invite-modal').modal({
-            keyboard: false
-        });
-        var inviteEmail = $('#invite-email');
-        inviteEmail.val('');
-    });
+	if(!PAGE_CONFIG['authenticated']) {
+	    $('#enter').bind('click', function(){
+	        $('#invite-form .control-group').show();
+	        $('#invite-form .help-inline').hide();
+	        $('#invite-form .control-group').removeClass('error');
+	        $('#invite-email').attr('disabled',false);
+	        $('#invite-button').attr('disabled',false);
+	        $('#invite-message').hide();
+	        $('#invite-modal').modal({
+	            keyboard: false
+	        });
+	        var inviteEmail = $('#invite-email');
+	        inviteEmail.val('');
+	    });
+	}
     
     $('#invite-email').bind('keypress', function(ev) {
    		if(ev.charCode == 13) {

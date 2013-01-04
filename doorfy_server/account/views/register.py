@@ -5,6 +5,8 @@ Created on Sep 10, 2012
 @author: HP
 '''
 
+    
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
@@ -12,7 +14,7 @@ from doorfy_server.account.forms.register import RegisterForm
 from doorfy_server.account.models import UserProfile
 from doorfy_server.util.logger import getLogger
 import json
-import uuid
+
 
 
 LOG = getLogger()
@@ -46,6 +48,8 @@ def register(request):
                 #sendActiveEmail(u)
                 result['code'].append(REGISTER_OK)
                 result['userId'] = u.id 
+                user = auth.authenticate(username=username, password=request.POST['password1'])
+                auth.login(request, user)
             return HttpResponse(json.dumps(result))
         else:
             if registerForm.errors['username']:
