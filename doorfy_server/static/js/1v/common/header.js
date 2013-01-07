@@ -63,7 +63,7 @@ $(function() {
             			$('#login-button').text('登陆成功');
             			loginSuccess = true;
             			if(PAGE_CONFIG['page_type'] === 'home') {
-            				window.location = '/family/list/' + result.userId
+            				window.location = '/family/list/';
             			} else {
             				window.location.reload();
             			}            			

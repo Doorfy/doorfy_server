@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 '''
 Created on 2013-1-4
 
@@ -21,7 +21,7 @@ def family_list(request):
         if request.user.is_authenticated():
             user = request.user
             familyUser = Family_User.objects.filter(user=user)
-            c={'familyUser':familyUser}
+            c = {'familyUser':familyUser}
             return render(request, "family/list.html", c, context_instance=RequestContext(request))
         else:
             return HttpResponseRedirect("/")
