@@ -9,42 +9,29 @@
 {% block content %}
 
 {% if familyUser|length > 0 %}
+<div>我的家庭:</div>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
+      <th>名称</th>
+      <th>描述</th>
     </tr>
   </thead>
   <tbody>
+ 	{% for fu in familyUser %}
     <tr>
-      <td>1</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>{{ fu.family.name }}</td>
+      <td>{{ fu.family.desc }}</td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+	{% endfor %}
   </tbody>
 </table>
 {% else%}
 <div class="alert alert-info">
 你还没有任何家庭的信息.
 </div>
-<a href="/family/new/" class="btn btn-primary">创建一个新家庭</a>
 {% endif %}
-
+<a href="/family/create/" class="btn btn-primary">创建一个新家庭</a>
 
 
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base_blank.html" %}
+
+{% block style %}
+<style>
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<form id="register-form" method="post" class="form-horizontal" action="/family/create/">
+  	{% csrf_token %}
+	<div class="control-group {% if createForm.name.errors %} error {% endif %} ">
+		<label class="control-label" for="name">名称</label>
+		<div class="controls">
+			{{ createForm.name }}
+			{% if createForm.name.errors %}
+		    	<span class="help-inline">{{createForm.name.errors.0|escape}}</span>
+		    {% endif %}
+			<span class="help-inline" style="display:none;"></span>
+		</div>
+	</div>
+
+	<div class="control-group {% if createForm.desc.errors %} error {% endif %} ">
+		<label class="control-label" for="desc">描述</label>
+		<div class="controls">
+			{{ createForm.desc }}
+		  	{% if createForm.desc.errors %}
+		    	<span class="help-inline">{{createForm.desc.errors.0|escape}}</span>
+		    {% endif %}
+		</div>
+	</div>
+	<div class="control-group">
+	  	<div class="controls">
+	    	<button type="submit" class="btn btn-primary">提交</button>
+	  	</div>
+	</div>
+</form>
+
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}
